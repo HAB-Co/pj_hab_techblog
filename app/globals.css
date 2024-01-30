@@ -31,3 +31,36 @@ body {
     text-wrap: balance;
   }
 }
+
+/* 追加 */
+
+header {
+  /* background-color: #464749; */
+  /* background-color: #7E95A9; */
+  color: #464749;
+}
+
+main {
+  /* background-color: #edf2f7;; */
+  background-color: rgb(245, 245, 245);
+}
+
+.main-color {
+  color: #2F2DA2;
+}
+
+.main-bg-color {
+  background-color: #2F2DA2;
+}
+
+
+.card {
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  transition-duration: 0.4s;
+  opacity: 0.75;
+}
