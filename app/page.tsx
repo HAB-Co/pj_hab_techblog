@@ -1,6 +1,11 @@
-import Image from 'next/image'
+import parseRSSFeed from './rss'
+import Link from 'next/link'
 
-export default function Home() {
+export default async function Home() {
+  const rssFeedUrl = 'https://zenn.dev/catnose99/feed' // RSSフィードのURLを指定
+  const items = await parseRSSFeed(rssFeedUrl)
+  const limitedItems = items.slice(0, 3)
+
   return (
     <>
       <header>
@@ -43,14 +48,6 @@ export default function Home() {
                     href="#"
                     className="block py-2 pr-4 pl-3 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
                   >
-                    Marketplace
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block py-2 pr-4 pl-3 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                  >
                     Features
                   </a>
                 </li>
@@ -76,186 +73,61 @@ export default function Home() {
         </nav>
       </header>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="flex justify-between w-full max-w-7xl">
-          <div className="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <a href="#">
-              <img
-                className="rounded-t-lg"
-                src="https://flowbite.com/docs/images/blog/image-1.jpg"
-                alt=""
-              />
-            </a>
-            <div className="p-5">
-              <a href="#">
-                <h5 className="mb-2 text-2xl font-semibold">
-                  エンジニアブログの作成のために、準備すること
-                </h5>
-              </a>
-              <div className="flex flex-wrap gap-1">
-                <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                  Next.js
-                </span>
-                <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">
-                  vercel
-                </span>
-                <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                  Rails
-                </span>
-              </div>
-              <div className="flex items-center gap-5 mt-3">
-                <img
-                  className="w-12 h-12 rounded rounded-full"
-                  src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
-                  alt="Large avatar"
-                />
-                <span className="font-bold tracking-tight text-gray-900 dark:text-white">
-                  佐藤　拓哉
-                </span>
-              </div>
-              <div className="text-sm font-normal text-end">2023年1月31日</div>
-              <a
-                href="#"
-                className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg main-bg-color mt-2"
-              >
-                Read more
-                <svg
-                  className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M1 5h12m0 0L9 1m4 4L9 9"
+        <div className="flex justify-between w-full max-w-7xl flex-wrap">
+          {limitedItems.map((post) => (
+            <Link
+              href={post.link}
+              className="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+            >
+              <img className="rounded-t-lg" src={post.enclosure.url} alt="" />
+              <div className="p-5">
+                <h5 className="mb-2 text-2xl font-semibold">{post.title}</h5>
+                <div className="flex flex-wrap gap-1">
+                  <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                    Next.js
+                  </span>
+                  <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">
+                    vercel
+                  </span>
+                  <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                    Rails
+                  </span>
+                </div>
+                <div className="flex items-center gap-5 mt-3">
+                  <img
+                    className="w-12 h-12 rounded rounded-full"
+                    src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
+                    alt="Large avatar"
                   />
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div className="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <a href="#">
-              <img
-                className="rounded-t-lg"
-                src="https://flowbite.com/docs/images/blog/image-1.jpg"
-                alt=""
-              />
-            </a>
-            <div className="p-5">
-              <a href="#">
-                <h5 className="mb-2 text-2xl font-semibold">
-                  エンジニアブログの作成のために、準備すること
-                </h5>
-              </a>
-              <div className="flex flex-wrap gap-1">
-                <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                  Next.js
-                </span>
-                <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">
-                  vercel
-                </span>
-                <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                  Rails
-                </span>
+                  <span className="font-bold tracking-tight text-gray-900 dark:text-white">
+                    {post['dc:creator']}
+                  </span>
+                </div>
+                <div className="text-sm font-normal text-end">
+                  {post.pubDate}
+                </div>
+                <div className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg main-bg-color mt-2">
+                  Read more
+                  <svg
+                    className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M1 5h12m0 0L9 1m4 4L9 9"
+                    />
+                  </svg>
+                </div>
               </div>
-              <div className="flex items-center gap-5 mt-3">
-                <img
-                  className="w-12 h-12 rounded rounded-full"
-                  src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
-                  alt="Large avatar"
-                />
-                <span className="font-bold tracking-tight text-gray-900 dark:text-white">
-                  佐藤　拓哉
-                </span>
-              </div>
-              <div className="text-sm font-normal text-end">2023年1月31日</div>
-              <a
-                href="#"
-                className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg main-bg-color mt-2"
-              >
-                Read more
-                <svg
-                  className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M1 5h12m0 0L9 1m4 4L9 9"
-                  />
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div className="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <a href="#">
-              <img
-                className="rounded-t-lg"
-                src="https://flowbite.com/docs/images/blog/image-1.jpg"
-                alt=""
-              />
-            </a>
-            <div className="p-5">
-              <a href="#">
-                <h5 className="mb-2 text-2xl font-semibold">
-                  エンジニアブログの作成のために、準備すること
-                </h5>
-              </a>
-              <div className="flex flex-wrap gap-1">
-                <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                  Next.js
-                </span>
-                <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">
-                  vercel
-                </span>
-                <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                  Rails
-                </span>
-              </div>
-              <div className="flex items-center gap-5 mt-3">
-                <img
-                  className="w-12 h-12 rounded rounded-full"
-                  src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
-                  alt="Large avatar"
-                />
-                <span className="font-bold tracking-tight text-gray-900 dark:text-white">
-                  佐藤　拓哉
-                </span>
-              </div>
-              <div className="text-sm font-normal text-end">2023年1月31日</div>
-              <a
-                href="#"
-                className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg main-bg-color mt-2"
-              >
-                Read more
-                <svg
-                  className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M1 5h12m0 0L9 1m4 4L9 9"
-                  />
-                </svg>
-              </a>
-            </div>
-          </div>
+            </Link>
+          ))}
         </div>
-
         <div className="w-full max-w-7xl w-full mt-20">
           <h3 className="text-3xl font-bold dark:text-white">Members</h3>
           <div className="flex mt-6 gap-5">
@@ -303,7 +175,6 @@ export default function Home() {
             </a>
           </div>
         </div>
-
         <div className="text-start w-full max-w-7xl w-full mt-20">
           <h3 className="text-3xl font-bold dark:text-white">Tags</h3>
           <div className="flex mt-6">
@@ -357,7 +228,83 @@ export default function Home() {
             </button>
           </div>
         </div>
+        <div className="flex justify-between w-full max-w-7xl flex-wrap mt-20 gap-10">
+          {items.map((post) => (
+            <Link
+              href={post.link}
+              className="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+            >
+              <img className="rounded-t-lg" src={post.enclosure.url} alt="" />
+              <div className="p-5">
+                <h5 className="mb-2 text-2xl font-semibold">{post.title}</h5>
+                <div className="flex flex-wrap gap-1">
+                  <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                    Next.js
+                  </span>
+                  <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">
+                    vercel
+                  </span>
+                  <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                    Rails
+                  </span>
+                </div>
+                <div className="flex items-center gap-5 mt-3">
+                  <img
+                    className="w-12 h-12 rounded rounded-full"
+                    src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
+                    alt="Large avatar"
+                  />
+                  <span className="font-bold tracking-tight text-gray-900 dark:text-white">
+                    {post['dc:creator']}
+                  </span>
+                </div>
+                <div className="text-sm font-normal text-end">
+                  {post.pubDate}
+                </div>
+                <div className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg main-bg-color mt-2">
+                  Read more
+                  <svg
+                    className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 10"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M1 5h12m0 0L9 1m4 4L9 9"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </main>
     </>
   )
 }
+
+// export async function getStaticProps() {
+//   try {
+//     const rssFeedUrl = 'https://zenn.dev/catnose99/feed' // RSSフィードのURLを指定
+//     const items = await parseRSSFeed(rssFeedUrl)
+
+//     return {
+//       props: {
+//         feedItems: items,
+//       },
+//       revalidate: 60 * 60, // ページを再生成する間隔（秒単位）
+//     }
+//   } catch (error) {
+//     console.error('Error fetching RSS feed:', error)
+//     return {
+//       props: {
+//         feedItems: [],
+//       },
+//     }
+//   }
+// }
