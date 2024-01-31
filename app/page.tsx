@@ -78,6 +78,7 @@ export default async function Home() {
             <Link
               href={post.link}
               className="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+              key={post.guid}
             >
               <img className="rounded-t-lg" src={post.enclosure.url} alt="" />
               <div className="p-5">
@@ -233,6 +234,7 @@ export default async function Home() {
             <Link
               href={post.link}
               className="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+              key={post.guid}
             >
               <img className="rounded-t-lg" src={post.enclosure.url} alt="" />
               <div className="p-5">
