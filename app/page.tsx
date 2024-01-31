@@ -5,7 +5,6 @@ export default async function Home() {
   const rssFeedUrl = 'https://zenn.dev/catnose99/feed' // RSSフィードのURLを指定
   const items = await parseRSSFeed(rssFeedUrl)
   const limitedItems = items.slice(0, 3)
-
   return (
     <>
       <header>
@@ -75,12 +74,12 @@ export default async function Home() {
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="flex justify-between w-full max-w-7xl flex-wrap">
           {limitedItems.map((post) => (
-            <Link
+            <a
               href={post.link}
               className="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
               key={post.guid}
             >
-              <img className="rounded-t-lg" src={post.enclosure.url} alt="" />
+              <img className="rounded-t-lg" src={post.enclosure?.url} alt="" />
               <div className="p-5">
                 <h5 className="mb-2 text-2xl font-semibold">{post.title}</h5>
                 <div className="flex flex-wrap gap-1">
@@ -126,7 +125,7 @@ export default async function Home() {
                   </svg>
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
         <div className="w-full max-w-7xl w-full mt-20">
@@ -231,12 +230,12 @@ export default async function Home() {
         </div>
         <div className="flex justify-between w-full max-w-7xl flex-wrap mt-20 gap-10">
           {items.map((post) => (
-            <Link
+            <a
               href={post.link}
               className="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
               key={post.guid}
             >
-              <img className="rounded-t-lg" src={post.enclosure.url} alt="" />
+              <img className="rounded-t-lg" src={post.enclosure?.url} alt="" />
               <div className="p-5">
                 <h5 className="mb-2 text-2xl font-semibold">{post.title}</h5>
                 <div className="flex flex-wrap gap-1">
@@ -282,7 +281,7 @@ export default async function Home() {
                   </svg>
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </main>
