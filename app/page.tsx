@@ -1,10 +1,41 @@
+import React from 'react'
 import parseRSSFeed from './rss'
 import Link from 'next/link'
+import { members } from '../members'
+import { log } from 'console'
 
 export default async function Home() {
-  const rssFeedUrl = 'https://zenn.dev/catnose99/feed' // RSSフィードのURLを指定
-  const items = await parseRSSFeed(rssFeedUrl)
-  const limitedItems = items.slice(0, 3)
+  // const rssFeedUrl = 'https://toaru-kaihatsu.com/feed/' // RSSフィードのURLを指定
+  // const items = await parseRSSFeed(rssFeedUrl)
+  let allPostItems: any = []
+
+  for (const member of members) {
+    const feedItems: any = member.sources
+    for (const feedItem of feedItems) {
+      const items = await parseRSSFeed(feedItem)
+      for (const item of items) {
+        item.avatarSrc = member.avatarSrc
+      }
+      if (items) allPostItems = [...allPostItems, ...items]
+    }
+  }
+
+  allPostItems.sort(
+    (a: any, b: any) =>
+      new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf()
+  )
+  const limitedItems = allPostItems.slice(0, 3)
+
+  function convertToJapanTime(utcDateString: any) {
+    const utcDate = new Date(utcDateString)
+    const dateText = `${utcDate.getFullYear()}年${utcDate.getMonth() +
+      1}月${utcDate.getDate()}日`
+    console.log(dateText) // 2022年5月5日
+    return dateText
+  }
+
+  console.log(allPostItems[0])
+
   return (
     <>
       <header>
@@ -73,38 +104,38 @@ export default async function Home() {
       </header>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="flex justify-between w-full max-w-7xl flex-wrap">
-          {limitedItems.map((post) => (
+          {limitedItems.map((post: any) => (
             <a
               href={post.link}
               className="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
               key={post.guid}
             >
-              <img className="rounded-t-lg" src={post.enclosure?.url} alt="" />
+              {post.image ? (
+                <img className="rounded-t-lg" src={post.image} alt="" />
+              ) : (
+                <img className="rounded-t-lg" src="/noimage.jpg" alt="" />
+              )}
               <div className="p-5">
                 <h5 className="mb-2 text-2xl font-semibold">{post.title}</h5>
                 <div className="flex flex-wrap gap-1">
-                  <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                    Next.js
-                  </span>
-                  <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">
-                    vercel
-                  </span>
-                  <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                    Rails
-                  </span>
+                  {post.categories.map((category: any) => (
+                    <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                      {category}
+                    </span>
+                  ))}
                 </div>
                 <div className="flex items-center gap-5 mt-3">
                   <img
                     className="w-12 h-12 rounded rounded-full"
-                    src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
-                    alt="Large avatar"
+                    src={post.avatarSrc}
+                    alt={post.name}
                   />
                   <span className="font-bold tracking-tight text-gray-900 dark:text-white">
                     {post['dc:creator']}
                   </span>
                 </div>
                 <div className="text-sm font-normal text-end">
-                  {post.pubDate}
+                  {convertToJapanTime(post.pubDate)}
                 </div>
                 <div className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg main-bg-color mt-2">
                   Read more
@@ -131,48 +162,15 @@ export default async function Home() {
         <div className="w-full max-w-7xl w-full mt-20">
           <h3 className="text-3xl font-bold dark:text-white">Members</h3>
           <div className="flex mt-6 gap-5">
-            <a href="#">
-              <img
-                className="w-20 h-20 rounded rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
-                alt="Large avatar"
-              />
-            </a>
-            <a href="#">
-              <img
-                className="w-20 h-20 rounded rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                alt="Large avatar"
-              />
-            </a>
-            <a href="#">
-              <img
-                className="w-20 h-20 rounded rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                alt="Large avatar"
-              />
-            </a>
-            <a href="#">
-              <img
-                className="w-20 h-20 rounded rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-4.jpg"
-                alt="Large avatar"
-              />
-            </a>
-            <a href="#">
-              <img
-                className="w-20 h-20 rounded rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                alt="Large avatar"
-              />
-            </a>
-            <a href="#">
-              <img
-                className="w-20 h-20 rounded rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
-                alt="Large avatar"
-              />
-            </a>
+            {members.map((member) => (
+              <a href="#">
+                <img
+                  className="w-20 h-20 rounded rounded-full"
+                  src={member.avatarSrc}
+                  alt={member.name}
+                />
+              </a>
+            ))}
           </div>
         </div>
         <div className="text-start w-full max-w-7xl w-full mt-20">
@@ -229,30 +227,26 @@ export default async function Home() {
           </div>
         </div>
         <div className="flex justify-between w-full max-w-7xl flex-wrap mt-20 gap-10">
-          {items.map((post) => (
+          {allPostItems.map((post: any) => (
             <a
               href={post.link}
               className="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
               key={post.guid}
             >
-              <img className="rounded-t-lg" src={post.enclosure?.url} alt="" />
+              <img className="rounded-t-lg" src="/noimage.jpg" alt="" />
               <div className="p-5">
                 <h5 className="mb-2 text-2xl font-semibold">{post.title}</h5>
                 <div className="flex flex-wrap gap-1">
-                  <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                    Next.js
-                  </span>
-                  <span className="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-gray-700 dark:text-gray-300">
-                    vercel
-                  </span>
-                  <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
-                    Rails
-                  </span>
+                  {post.categories.map((category: any) => (
+                    <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                      {category}
+                    </span>
+                  ))}
                 </div>
                 <div className="flex items-center gap-5 mt-3">
                   <img
                     className="w-12 h-12 rounded rounded-full"
-                    src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
+                    src={post.avatarSrc}
                     alt="Large avatar"
                   />
                   <span className="font-bold tracking-tight text-gray-900 dark:text-white">
@@ -260,7 +254,7 @@ export default async function Home() {
                   </span>
                 </div>
                 <div className="text-sm font-normal text-end">
-                  {post.pubDate}
+                  {convertToJapanTime(post.pubDate)}
                 </div>
                 <div className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg main-bg-color mt-2">
                   Read more
