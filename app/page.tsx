@@ -176,7 +176,7 @@ export default async function Home() {
             ))}
           </div>
         </div>
-        <div className="text-start w-full max-w-7xl w-full mt-20">
+        {/* <div className="text-start w-full max-w-7xl w-full mt-20">
           <h3 className="text-3xl font-bold dark:text-white">Tags</h3>
           <div className="flex mt-6">
             <button
@@ -228,7 +228,7 @@ export default async function Home() {
               Purple
             </button>
           </div>
-        </div>
+        </div> */}
         <div className="flex justify-between w-full max-w-7xl flex-wrap mt-20 gap-10">
           {allPostItems.map((post: any) => (
             <a
