@@ -29,6 +29,6 @@ export const members: Member[] = [
     includeUrlRegex: "",
     twitterUsername: "",
     githubUsername: "",
-    websiteUrl: "",
+    websiteUrl: "https://wool-blog-astroship.vercel.app/",
   },
 ];

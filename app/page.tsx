@@ -118,8 +118,11 @@ export default async function Home() {
               <div className="p-5">
                 <h5 className="mb-2 text-2xl font-semibold">{post.title}</h5>
                 <div className="flex flex-wrap gap-1">
-                  {post.categories.map((category: any) => (
-                    <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                  {post.categories.map((category: any, index: number) => (
+                    <span
+                      className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
+                      key={index}
+                    >
                       {category}
                     </span>
                   ))}
@@ -162,8 +165,8 @@ export default async function Home() {
         <div className="w-full max-w-7xl w-full mt-20">
           <h3 className="text-3xl font-bold dark:text-white">Members</h3>
           <div className="flex mt-6 gap-5">
-            {members.map((member) => (
-              <a href="#">
+            {members.map((member, index: number) => (
+              <a href={member.websiteUrl} key={index}>
                 <img
                   className="w-20 h-20 rounded rounded-full"
                   src={member.avatarSrc}
@@ -237,8 +240,11 @@ export default async function Home() {
               <div className="p-5">
                 <h5 className="mb-2 text-2xl font-semibold">{post.title}</h5>
                 <div className="flex flex-wrap gap-1">
-                  {post.categories.map((category: any) => (
-                    <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                  {post.categories.map((category: any, index: number) => (
+                    <span
+                      className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
+                      key={index}
+                    >
                       {category}
                     </span>
                   ))}
