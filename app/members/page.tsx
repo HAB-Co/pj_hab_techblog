@@ -1,4 +1,5 @@
 import React from 'react'
+import Script from 'next/script'
 
 export default async function Member() {
   return (
@@ -63,7 +64,7 @@ export default async function Member() {
         <div className="w-full max-w-5xl flex-wrap">
           <h3 className="text-3xl font-bold dark:text-white">Members</h3>
           <whoz-widget user-token="874e344c-3d62-4e78-aed0-719025074dc1"></whoz-widget>
-          <script src="https://platform.whoz.jp/widget.js"></script>
+          <Script src="https://platform.whoz.jp/widget.js" />
         </div>
       </main>
     </>

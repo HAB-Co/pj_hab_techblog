@@ -41,11 +41,13 @@ export default async function Home({
   const limitedItems = allPostItems.slice(0, 3)
 
   if (tag) {
-    allPostItems = allPostItems.filter((item) => item.categories?.includes(tag))
+    allPostItems = allPostItems.filter((item: any) =>
+      item.categories?.includes(tag)
+    )
   }
 
   if (q) {
-    allPostItems = allPostItems.filter((item) => item.title.includes(q))
+    allPostItems = allPostItems.filter((item: any) => item.title.includes(q))
   }
 
   return (
@@ -113,7 +115,7 @@ export default async function Home({
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <div className="flex justify-between w-full max-w-7xl flex-wrap">
           {limitedItems.map((post: any) => (
-            <Card post={post}></Card>
+            <Card post={post} key={post.guid}></Card>
           ))}
         </div>
         <div className="w-full max-w-7xl w-full mt-20">
@@ -173,8 +175,8 @@ export default async function Home({
             </div>
           </form>
           <div className="mt-5">
-            {allTagItems.map((item: any, index) => (
-              <a href={`?tag=${item}`}>
+            {allTagItems.map((item: any, index: number) => (
+              <a href={`?tag=${item}`} key={index}>
                 <span
                   className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
                   key={index}
@@ -187,7 +189,7 @@ export default async function Home({
         </div>
         <div className="flex justify-between w-full max-w-7xl flex-wrap mt-20 gap-10">
           {allPostItems.map((post: any) => (
-            <Card post={post}></Card>
+            <Card post={post} key={post.guid}></Card>
           ))}
         </div>
       </main>

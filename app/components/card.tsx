@@ -4,7 +4,8 @@ function convertToJapanTime(utcDateString: any) {
     1}月${utcDate.getDate()}日`
   return dateText
 }
-const Card = ({ post }) => {
+
+const Card = ({ post }: any) => {
   return (
     <>
       <a
