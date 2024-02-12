@@ -1,5 +1,4 @@
-import { Member } from "./app/types";
-
+import { Member } from "./types";
 export const members: Member[] = [
   {
     id: "harayama",
@@ -30,5 +29,20 @@ export const members: Member[] = [
     twitterUsername: "",
     githubUsername: "",
     websiteUrl: "https://wool-blog-astroship.vercel.app/",
+  },
+  {
+    id: "hab",
+    name: "hab",
+    role: "EM",
+    bio:
+      "",
+    avatarSrc: "/avatars/hab.jpg",
+    sources: [
+      "https://qiita.com/organizations/hab-co/activities.atom/",
+    ],
+    includeUrlRegex: "",
+    twitterUsername: "",
+    githubUsername: "",
+    websiteUrl: "https://qiita.com/organizations/hab-co/",
   },
 ];
