@@ -1,11 +1,13 @@
-function convertToJapanTime(utcDateString: any) {
+import { PostItem } from '../types'
+
+function convertToJapanTime(utcDateString: string) {
   const utcDate = new Date(utcDateString)
   const dateText = `${utcDate.getFullYear()}年${utcDate.getMonth() +
     1}月${utcDate.getDate()}日`
   return dateText
 }
 
-const Card = ({ post }: any) => {
+const Card = ({ post }: { post: PostItem }) => {
   return (
     <>
       <a
@@ -18,7 +20,7 @@ const Card = ({ post }: any) => {
             <div className="min-h-40 flex flex-wrap items-center border rounded-xl px-2 py-5 border-gray-300 w-full">
               <h5 className="mb-2 text-xl font-semibold">{post.title}</h5>
               <div className="flex flex-wrap justify-end gap-1 mt-auto ml-auto">
-                {post.categories?.map((category: any, index: number) => (
+                {post.categories?.map((category: string, index: number) => (
                   <span
                     className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
                     key={index}

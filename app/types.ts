@@ -13,11 +13,11 @@ export type Member = {
 };
 
 export type PostItem = {
-  authorId: string;
-  authorName: string;
+  guid: string;
   title: string;
+  name: string;
   link: string;
-  contentSnippet?: string;
-  isoDate?: string;
-  dateMiliSeconds: number;
+  pubDate: string;
+  categories?: string[];
+  avatarSrc?: string;
 };

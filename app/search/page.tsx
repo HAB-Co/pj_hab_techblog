@@ -1,13 +1,23 @@
+"use client"
 import React from 'react'
-import parseRSSFeed from './rss'
-import { members } from './members'
-import Card from './components/card'
-import { PostItem } from './types'
 import Link from 'next/link'
+import parseRSSFeed from '../rss'
+import { members } from '../members'
+import { PostItem } from '../types'
+import Card from '../components/card'
 
-export default async function Home() {
+export default async function Home({
+  params,
+  searchParams,
+}: {
+  params: { slug: string }
+  searchParams: { [key: string]: string | undefined }
+}) {
   let allPostItems: Array<any> = []
   let allTagItems: Array<string> = []
+
+  const q = searchParams.q
+  const tag = searchParams.tag
 
   for (const member of members) {
     const feedItems: any = member.sources
@@ -32,6 +42,18 @@ export default async function Home() {
       new Date(b.pubDate).valueOf() - new Date(a.pubDate).valueOf()
   )
   const limitedItems = allPostItems.slice(0, 3)
+
+  if (tag) {
+    allPostItems = allPostItems.filter((item: PostItem) =>
+      item.categories?.includes(tag)
+    )
+  }
+
+  if (q) {
+    allPostItems = allPostItems.filter((item: PostItem) =>
+      item.title.includes(q)
+    )
+  }
 
   return (
     <>
@@ -159,7 +181,7 @@ export default async function Home() {
           </form>
           <div className="mt-5">
             {allTagItems.map((item: string, index: number) => (
-              <Link href={`/search/?tag=${item}`} key={index}>
+              <Link href={`?tag=${item}`} key={index}>
                 <span
                   className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
                   key={index}
