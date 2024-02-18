@@ -116,7 +116,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="w-full max-w-7xl w-full mt-20">
-          <form action="search" method="get">
+          {/* <form action="search" method="get">
             <label
               htmlFor="default-search"
               className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -156,8 +156,8 @@ export default async function Home() {
                 Search
               </button>
             </div>
-          </form>
-          <div className="mt-5">
+          </form> */}
+          {/* <div className="mt-5">
             {allTagItems.map((item: string, index: number) => (
               <Link href={`/search/?tag=${item}`} key={index}>
                 <span
@@ -168,7 +168,7 @@ export default async function Home() {
                 </span>
               </Link>
             ))}
-          </div>
+          </div> */}
         </div>
         <div className="flex justify-between w-full max-w-7xl flex-wrap mt-20 gap-10">
           {allPostItems.map((post: PostItem) => (
