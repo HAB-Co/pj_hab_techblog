@@ -4,6 +4,7 @@ import parseRSSFeed from '../rss'
 import { members } from '../members'
 import { PostItem } from '../types'
 import Card from '../components/card'
+import { fetchAllPostItems } from '../utils'
 
 export default async function Home({
   params,
@@ -12,29 +13,12 @@ export default async function Home({
   params: { slug: string }
   searchParams: { [key: string]: string | undefined }
 }) {
-  let allPostItems: Array<any> = []
-  let allTagItems: Array<string> = []
+  let allSearchPostItems: Array<any> = []
 
   const q = searchParams.q
   const tag = searchParams.tag
 
-  for (const member of members) {
-    const feedItems: any = member.sources
-    for (const feedItem of feedItems) {
-      const items = await parseRSSFeed(feedItem)
-      for (const item of items) {
-        item.avatarSrc = member.avatarSrc
-        item.name = member.name
-        item.categories?.map((category: string) => {
-          if (!allTagItems.includes(category)) {
-            allTagItems.push(category)
-          }
-        })
-        console.log(allTagItems)
-      }
-      if (items) allPostItems = [...allPostItems, ...items]
-    }
-  }
+  const { allPostItems, allTagItems } = await fetchAllPostItems(members)
 
   allPostItems.sort(
     (a: { pubDate: string }, b: { pubDate: string }) =>
@@ -43,13 +27,13 @@ export default async function Home({
   const limitedItems = allPostItems.slice(0, 3)
 
   if (tag) {
-    allPostItems = allPostItems.filter((item: PostItem) =>
+    allSearchPostItems = allPostItems.filter((item: PostItem) =>
       item.categories?.includes(tag)
     )
   }
 
   if (q) {
-    allPostItems = allPostItems.filter((item: PostItem) =>
+    allSearchPostItems = allPostItems.filter((item: PostItem) =>
       item.title.includes(q)
     )
   }
@@ -183,7 +167,7 @@ export default async function Home({
           </div>
         </div>
         <div className="flex justify-between w-full max-w-7xl flex-wrap mt-20 gap-10">
-          {allPostItems.map((post: PostItem) => (
+          {allSearchPostItems.map((post: PostItem) => (
             <Card post={post} key={post.guid}></Card>
           ))}
         </div>
