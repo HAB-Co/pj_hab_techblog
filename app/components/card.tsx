@@ -12,10 +12,10 @@ const Card = ({ post }: { post: PostItem }) => {
     <>
       <a
         href={post.link}
-        className="card max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 min-w-96"
+        className="card w-full md:max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 md:min-w-96"
         key={post.guid}
       >
-        <div className="p-5 min-h-full">
+        <div className="p-5 min-h-full w-full">
           <div className="title">
             <div className="min-h-40 flex flex-wrap items-center border rounded-xl px-2 py-5 border-gray-300 w-full">
               <h5 className="mb-2 text-xl font-semibold">{post.title}</h5>

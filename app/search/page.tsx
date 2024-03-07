@@ -132,13 +132,13 @@ export default async function Home({
           </div>
         </nav>
       </header>
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="flex justify-between w-full max-w-7xl flex-wrap">
+      <main className="flex min-h-screen flex-col items-center justify-between md:p-24 p-5">
+        <div className="flex justify-between w-full max-w-7xl flex-wrap gap-5">
           {limitedItems.map((post: PostItem) => (
             <Card post={post} key={post.guid}></Card>
           ))}
         </div>
-        <div className="w-full max-w-7xl w-full mt-20">
+        <div className="max-w-7xl w-full mt-20">
           <h3 className="text-3xl font-bold dark:text-white">Members</h3>
           <div className="flex mt-6 gap-5">
             {members.map((member, index: number) => (
@@ -152,10 +152,11 @@ export default async function Home({
             ))}
           </div>
         </div>
-        <div className="w-full max-w-7xl w-full mt-20">
-          <div className="mt-5">
+        <div className="max-w-7xl w-full mt-20">
+          <h3 className="text-3xl font-bold dark:text-white">Tags</h3>
+          <div className="mt-5 flex flex-wrap">
             {allTagItems.map((item: string, index: number) => (
-              <Link href={`?tag=${item}`} key={index}>
+              <Link href={`search/?tag=${item}`} key={index}>
                 <span
                   className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300"
                   key={index}
@@ -166,7 +167,7 @@ export default async function Home({
             ))}
           </div>
         </div>
-        <div className="flex justify-between w-full max-w-7xl flex-wrap mt-20 gap-10">
+        <div className="flex w-full max-w-7xl flex-wrap mt-20 gap-16">
           {allSearchPostItems.map((post: PostItem) => (
             <Card post={post} key={post.guid}></Card>
           ))}
@@ -174,11 +175,12 @@ export default async function Home({
       </main>
       <Link
         href="https://www.wantedly.com/companies/hab-co/projects"
-        className="p-4 shadow-sm bg-purple-500 w-32 h-32 rounded-full flex main-bg-color fixed bottom-8 right-8 text-white flex items-center hover:opacity-75 ease-in duration-200"
+        className="md:p-4 p-2 shadow-sm bg-purple-500 md:w-32 md:h-32 w-20 h-20 rounded-full flex main-bg-color fixed md:bottom-8 md:right-8 right-4 bottom-4 text-white items-center hover:opacity-75 ease-in duration-200 text-center"
         target="_blank"
         rel="noopener"
       >
-        エンジニアの採用はこちら
+        <span className="md:block hidden">エンジニアの採用はこちら</span>
+        <span className="md:hidden block text-xs">エンジニア採用</span>
       </Link>
     </>
   )
