@@ -8,7 +8,7 @@ export default function Header() {
           <Link href="/" className="flex items-center">
             <img
               src="/logo_01.webp"
-              className="mr-3 h-6 sm:h-9"
+              className="mr-3 h-6 sm:h-9 bg-white"
               alt="Flowbite Logo"
             />
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
