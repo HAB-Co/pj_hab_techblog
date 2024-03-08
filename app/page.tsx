@@ -18,7 +18,7 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <main className="flex min-h-screen flex-col items-center justify-between md:p-24 p-5 bg-stone-800">
+      <main className="flex min-h-screen flex-col items-center justify-between md:p-24 p-5  dark:bg-stone-800">
         <div className="flex justify-between w-full max-w-7xl flex-wrap gap-5">
           {limitedItems.map((post: PostItem) => (
             <Card post={post} key={post.guid}></Card>
