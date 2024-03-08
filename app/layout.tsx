@@ -4,6 +4,7 @@ import { Noto_Sans_JP } from "next/font/google";
 
 import "./globals.css";
 import Analytics from "./components/Analytics";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 const notoSansJP = Noto_Sans_JP({
@@ -28,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={notoSansJP.className}><Analytics />{children}</body>
+      <body className={notoSansJP.className}><Suspense><Analytics /></Suspense>{children}</body>
     </html>
   );
 }
