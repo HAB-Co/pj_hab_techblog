@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Noto_Sans_JP } from "next/font/google";
 
 import "./globals.css";
+import Analytics from "./components/Analytics";
 
 const inter = Inter({ subsets: ["latin"] });
 const notoSansJP = Noto_Sans_JP({
@@ -27,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={notoSansJP.className}>{children}</body>
+      <body className={notoSansJP.className}><Analytics />{children}</body>
     </html>
   );
 }
